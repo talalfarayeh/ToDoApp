@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin-top: 20px;
+}
+
+h1, h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+    .list-group-item span {
+        flex-grow: 1;
+    }
+
+.btn-sm {
+    margin-left: 5px;
+}
+
+.text-muted {
+    font-style: italic;
+}
+
+form {
+/*    display: inline-block;
+*/
+ display:flex;
+
+
+}
+.inpot_container{
+    flex-grow:1
+}
+.taskTitle {
+    word-break: break-all;
+}
+
+
+
+
+
+
+
+

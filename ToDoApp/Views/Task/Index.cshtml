@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "To-Do List";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center mb-4">To-Do List</h1>
+ 
+            <form method="post" id="ToDo_Form" asp-action="Add" asp-controller="Task" class="input-group mb-4">
+                <div class="inpot_container">
+                    <input type="text" id="ToDo_Input" name="Title" class="form-control" placeholder="Add a new task" maxlength="100" />
+                    <small id="input_error" class="position-absolute"></small>
+</div>
+                <button class="btn btn-primary" id="btn_AddTask" type="submit">Add Task</button>
+            </form>
+
+      
+            <h2 class="text-secondary">Pending Tasks</h2>
+            <ul class="list-group mb-4">
+                @if (ViewBag.PendingTasks.Count > 0)
+                {
+                    @foreach (var task in ViewBag.PendingTasks)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                     
+                            <input type="checkbox" class="form-check-input" onchange="markTaskComplete(@task.Id)" />
+                            <span class="taskTitle" >@task.Title</span>
+                            <form method="post" asp-action="Delete" asp-controller="Task" class="d-inline">
+                                <input type="hidden" name="id" value="@task.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item text-muted">No pending tasks.</li>
+                }
+            </ul>
+
+           
+            <h2 class="text-secondary">Completed Tasks</h2>
+            <ul class="list-group">
+                @if (ViewBag.CompletedTasks.Count > 0)
+                {
+                    @foreach (var task in ViewBag.CompletedTasks)
+                    {
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input" checked disabled />
+                            <span class="taskTitle">@task.Title</span>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item text-muted">No completed tasks.</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function markTaskComplete(taskId) {
+        fetch(`/Task/MarkComplete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${taskId}`
+        }).then(() => location.reload());
+    }
+</script>
